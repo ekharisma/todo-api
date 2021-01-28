@@ -10,7 +10,7 @@ class TodoTable extends Model
     protected $table = "todo_table";
 
     protected $fillable = [
-        'activity', 'description'
+        'activity', 'description', 'Person_id'
     ];
 
     protected $hidden = [];

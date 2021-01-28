@@ -11,7 +11,7 @@ class PersonController extends Controller
 
     public function __construct()
     {   
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
     public function register(Request $request)
@@ -55,7 +55,7 @@ class PersonController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        return response()->json([auth()->user()]);
     }
 
     /**

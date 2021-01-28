@@ -17,12 +17,17 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group(['prefix' => 'api'], function() use ($router){
-    $router->post('register', ['uses' => 'PersonController@register']);
-    $router->post('login', ['uses' => 'PersonController@login']);
+$router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($router) {
+    $router->get('me', ['uses' => 'PersonController@me']);
+    $router->get('logout', ['uses' => 'PersonController@logout']);
     $router->get('tasks', ['uses' => 'TaskController@getTasks']);
     $router->get('tasks/{id}', ['uses' => 'TaskController@getTaskById']);
     $router->post('task', ['uses' => 'TaskController@setTask']);
-    $router->patch('tasks/{id}', ['uses'=> 'TaskController@updateTask']);
-    $router->delete('tasks/{id}', ['uses'=> 'TaskController@deleteTask']);
+    $router->patch('tasks/{id}', ['uses' => 'TaskController@updateTask']);
+    $router->delete('tasks/{id}', ['uses' => 'TaskController@deleteTask']);
+});
+
+$router->group(['prefix' => 'api'], function () use ($router) {
+    $router->post('register', ['uses' => 'PersonController@register']);
+    $router->post('login', ['uses' => 'PersonController@login']);
 });
