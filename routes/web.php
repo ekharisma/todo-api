@@ -18,6 +18,8 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'api'], function() use ($router){
+    $router->post('register', ['uses' => 'PersonController@register']);
+    $router->post('login', ['uses' => 'PersonController@login']);
     $router->get('tasks', ['uses' => 'TaskController@getTasks']);
     $router->get('tasks/{id}', ['uses' => 'TaskController@getTaskById']);
     $router->post('task', ['uses' => 'TaskController@setTask']);

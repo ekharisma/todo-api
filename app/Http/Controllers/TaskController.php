@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\TodoTable;
-use Exception;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
@@ -31,8 +30,16 @@ class TaskController extends Controller
 
     public function setTask(Request $request)
     {
-        $todo = TodoTable::create($request->all());
-        return response()->json([$todo, $request->all()], 201);
+        $validator = Validator::make($request->all(), [
+            'activity' => ['required'],
+            'description' => ['required']
+            ]
+        );
+        if (!$validator->failed()){
+            $todo = TodoTable::create($request->all());
+            return response()->json([$todo], 201);
+        }
+        return response()->json(['status'=> 'failed', 404]);
     }
 
     public function updateTask(Request $request, $id)
